@@ -4,16 +4,15 @@ const cors = require('cors')
 const path = require('path')
 const mysql = require('mysql')
 
-
 // Create the server
 const app = express()
-
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, 'client/build')))
-
 app.use(cors());
 
 const SELECT_ALL_USERS = 'select * from users'
+const SELECT_ALL_PRODUCTS = 'select * from products'
+const SELECT_DETAIL_PRODUCT = 'select * from detailProducts'
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -47,6 +46,33 @@ app.get('/users', (req, res) => {
     }
   })
 })
+
+app.get('/products', (req, res) => {
+  connection.query(SELECT_ALL_PRODUCTS, (err, results) => {
+    if(err) {
+      return res.send(err)
+    }
+    else {
+      return res.json({
+        data: results
+      })
+    }
+  })
+})
+
+app.get('/detailProduct', (req, res) => {
+  connection.query(SELECT_DETAIL_PRODUCT, (err, results) => {
+    if(err) {
+      return res.send(err)
+    }
+    else {
+      return res.json({
+        data: results
+      })
+    }
+  })
+})
+
 app.get('/users/add', (req, res) => {
   const { uid, firstname, secondname } = req.query;
   const INSERT_USERS = `INSERT INTO users (uid, firstname, secondname) values('${uid}','${firstname}','${secondname}')`;
