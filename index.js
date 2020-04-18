@@ -25,7 +25,9 @@ const connection = mysql.createConnection({
 connection.connect(err => {
   if(err) {
     return err;
-  }
+  }setInterval(function () {
+    connection.query('SELECT 1');
+}, 5000);
 })
 console.log(connection);
 
@@ -45,7 +47,6 @@ app.get('/users', (req, res) => {
     }
   })
 })
-
 app.get('/users/add', (req, res) => {
   const { uid, firstname, secondname } = req.query;
   const INSERT_USERS = `INSERT INTO users (uid, firstname, secondname) values('${uid}','${firstname}','${secondname}')`;
