@@ -34,18 +34,6 @@ app.get('/', (req, res) => {
   res.send('go to the home page')
 })
 
-app.get('/users', (req, res) => {
-  connection.query(SELECT_ALL_USERS, (err, results) => {
-    if(err) {
-      return res.send(err)
-    }
-    else {
-      return res.json({
-        data: results
-      })
-    }
-  })
-})
 
 app.get('/products', (req, res) => {
   connection.query(SELECT_ALL_PRODUCTS, (err, results) => {
@@ -73,9 +61,9 @@ app.get('/detailProduct', (req, res) => {
   })
 })
 
-app.get('/users/add', (req, res) => {
-  const { uid, firstname, secondname } = req.query;
-  const INSERT_USERS = `INSERT INTO users (uid, firstname, secondname) values('${uid}','${firstname}','${secondname}')`;
+app.get('/userDetails/add', (req, res) => {
+  const { uid, name, email, phone, address } = req.query;
+  const INSERT_USERS = `INSERT INTO userDetails (uid, name, email, phone, address) values('${uid}','${name}','${email}','${phone}','${address}')`;
   connection.query(INSERT_USERS, (err, results) => {
     if(err) {
       return res.send(err)
@@ -85,7 +73,6 @@ app.get('/users/add', (req, res) => {
     }
   })
 })
-
 // Anything that doesn't match the above, send back the index.html file
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
