@@ -62,8 +62,8 @@ app.get('/detailProduct', (req, res) => {
 })
 
 app.get('/userDetails/add', (req, res) => {
-  const { uid, name, email, phone, address } = req.query;
-  const INSERT_USERS = `INSERT INTO userDetails (uid, name, email, phone, address) values('${uid}','${name}','${email}','${phone}','${address}')`;
+  const { uid, name, email, phone, address, euro, dollar } = req.query;
+  const INSERT_USERS = `INSERT INTO userDetails (uid, name, email, phone, address, euro, dollar) values('${uid}','${name}','${email}','${phone}','${address}','${euro}','${dollar}')`;
   connection.query(INSERT_USERS, (err, results) => {
     if(err) {
       return res.send(err)
